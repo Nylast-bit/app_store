@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+
 import 'package:appmovil/Buyers/view/screens/authentication_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.95),
+      backgroundColor: Colors.white.withOpacity(0.98),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
@@ -22,14 +23,14 @@ class LoginScreen extends StatelessWidget {
               Text("Login to your account",
               style: TextStyle(
                 fontSize: 30,
-                color: Color(0xffffffff),
+                color: Color(0xff000000),
                 letterSpacing: 1,
                 ),
               ),
               Text("To explore world exclusives",
               style: TextStyle(
                 fontSize: 18,
-                color: Color(0xffFFFFFF),
+                color: Color(0xff000000),
                 letterSpacing: 0.5,
                 ),
               ),
@@ -66,8 +67,7 @@ class LoginScreen extends StatelessWidget {
                   filled: true,
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: Icon(Icons.remove_red_eye),
-                  labelText: "Enter your email",
-                  hintText: "your@email.com",
+                  labelText: "Enter your password",
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(10.0),
@@ -88,8 +88,8 @@ class LoginScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xffcb0026),
-                        Color(0xff444444),
+                        Color(0xffFFAF61),
+                        Color(0xffDD5746),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(10.0),
@@ -105,13 +105,13 @@ class LoginScreen extends StatelessWidget {
                   )
                 ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Need an account?',
                     style: TextStyle(
-                      color: Color(0xffffffff),
+                      color: Color(0xff000000),
                     ),
                   ),
                   SizedBox(width: 10,),
@@ -124,7 +124,7 @@ class LoginScreen extends StatelessWidget {
                     child: Text('Register here',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color(0xffcb0026),
+                        color: Color(0xffFFAF61),
                       ),
                     ),
                   ),
