@@ -13,6 +13,7 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+             Image.asset('assets/icons/user.png', ),
               Text('Create a new account',
                 style: TextStyle(
                   fontSize: 30,
