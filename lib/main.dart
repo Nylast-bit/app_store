@@ -1,7 +1,24 @@
+import 'dart:io';
+
 import 'package:appmovil/Buyers/view/screens/authentication_screens/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid
+  ? await Firebase.initializeApp(
+    options: FirebaseOptions(
+        apiKey: "AIzaSyCeRtE0Szqgp9DeKRU0NHCSujTSbBOHZZc",
+        appId: "1:1000882735105:android:9583ef5c1dc9ee63bc5800",
+        messagingSenderId: "1000882735105",
+        projectId:  "app-store-6940c",
+        storageBucket: "gs://app-store-6940c.appspot.com"
+    )
+  )
+  : await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

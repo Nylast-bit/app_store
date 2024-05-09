@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1000882735105",
+    "project_id": "app-store-6940c",
+    "storage_bucket": "app-store-6940c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000882735105:android:9583ef5c1dc9ee63bc5800",
+        "android_client_info": {
+          "package_name": "com.appstorebp.appmovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeRtE0Szqgp9DeKRU0NHCSujTSbBOHZZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
