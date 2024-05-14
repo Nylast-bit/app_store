@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:appmovil/Buyers/view/screens/authentication_screens/login_screen.dart';
+import 'package:appmovil/Buyers/view/screens/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         //brightness: Brightness.dark,
       //),
       title: 'Material App',
-      home: LoginScreen(),
+      home: MainScreen(),
     );
   }
 }

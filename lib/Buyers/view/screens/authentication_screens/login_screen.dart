@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 
 import 'package:appmovil/Buyers/view/screens/authentication_screens/register_screen.dart';
@@ -7,6 +6,8 @@ import 'package:flutter/material.dart';
 
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
 
 
   @override
@@ -20,35 +21,35 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
 
             children: [
-              Text("Login to your account",
+              const Text("Login to your account",
               style: TextStyle(
                 fontSize: 30,
                 color: Color(0xff000000),
                 letterSpacing: 1,
                 ),
               ),
-              Text("To explore world exclusives",
+              const Text("To explore world exclusives",
               style: TextStyle(
                 fontSize: 18,
                 color: Color(0xff000000),
                 letterSpacing: 0.5,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Image.asset('assets/images/Illustration.png',
               width: 250.0,
                 //height: 250.0,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               TextFormField(
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
-                  prefixIcon: Icon(Icons.mail),
+                  prefixIcon: const Icon(Icons.mail),
                   labelText: "Enter your email",
                   hintText: "your@email.com",
                   border: OutlineInputBorder(
@@ -57,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               TextFormField(
@@ -65,8 +66,14 @@ class LoginScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
-                  prefixIcon: Icon(Icons.lock),
-                  suffixIcon: Icon(Icons.remove_red_eye),
+                  prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: InkWell(
+                    onTap: () {
+
+                    },
+                    child: const Icon(Icons.remove_red_eye
+                    ),
+                  ),
                   labelText: "Enter your password",
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -75,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
 
-            SizedBox(height: 30, ),
+            const SizedBox(height: 30, ),
 
               GestureDetector(
                 onTap: () {
@@ -86,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                   height: 70,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         Color(0xffFFAF61),
                         Color(0xffDD5746),
@@ -94,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text('Login',
                       style: TextStyle(
                         fontSize: 25,
@@ -105,23 +112,23 @@ class LoginScreen extends StatelessWidget {
                   )
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Need an account?',
+                  const Text('Need an account?',
                     style: TextStyle(
                       color: Color(0xff000000),
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return RegisterScreen();
                       },));
                     },
-                    child: Text('Register here',
+                    child: const Text('Register here',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xffFFAF61),

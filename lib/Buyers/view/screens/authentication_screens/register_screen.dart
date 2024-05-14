@@ -1,3 +1,4 @@
+import 'package:appmovil/Buyers/controller/auth_controller.dart';
 import 'package:appmovil/Buyers/view/screens/authentication_screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +13,42 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  AuthController _authController = AuthController();
   late String userName;
   late String password;
   late String email;
+  bool _isLoading = false;
 
-  registerUser(){
+  registerUser() async{
+    setState(() {
+      _isLoading = true;
+    });
     if(_formKey.currentState!.validate()){
-      print('validado');
+      String res = await _authController
+          .createNewUser(email, password, userName).whenComplete(() {
+            setState((){
+              _formKey.currentState!.reset();
+              _isLoading = false;
+            });
+      });
+
+      if(res == 'Success'){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Account Created'),),);
+        Future.delayed(Duration.zero, () {
+          Navigator.push(context, MaterialPageRoute(builder: (context){
+            return LoginScreen();
+          },));
+        },) ;
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res),),);
+      }
     }
     else{
-      print('error');
+      setState(() {
+        _isLoading = false;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Complete'),),);
+      });
     }
   }
 //Naranja 0xffFFAF61
@@ -62,12 +89,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 30,
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      email = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter valid email';
                       } else {
                         return null;
                       }
+
                     },
                     decoration: InputDecoration(
                         fillColor: Colors.white,
@@ -80,6 +111,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 30,
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      userName = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter a Name';
@@ -98,6 +132,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 30,
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      password = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter a password';
@@ -134,8 +171,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Center(
-                        child: Text(
-                          'Register',
+                        child: _isLoading ? CircularProgressIndicator( color: Colors.white,) :
+                        Text('Register',
                           style: TextStyle(
                             fontSize: 25,
                             color: Colors.white,
