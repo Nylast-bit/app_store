@@ -1,15 +1,60 @@
 
 
 import 'package:appmovil/Buyers/view/screens/authentication_screens/register_screen.dart';
+import 'package:appmovil/Buyers/view/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../controller/auth_controller.dart';
 
 
-class LoginScreen extends StatelessWidget {
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
 
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthController _authController = AuthController();
+  late String email;
+  late String password;
+  bool _isLoading = false;
+
+  loginUser() async{
+    setState(() {
+      _isLoading = true;
+    });
+    if(_formKey.currentState!.validate()){
+      String res = await _authController
+          .loginUser(email, password).whenComplete(() {
+        setState((){
+          _formKey.currentState!.reset();
+          _isLoading = false;
+        });
+      });
+
+      if(res == 'Success'){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login Successfully'),),);
+        Future.delayed(Duration.zero, () {
+          Navigator.push(context, MaterialPageRoute(builder: (context){
+            return MainScreen();
+          },));
+        },) ;
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res),),);
+      }
+    }
+    else{
+      setState(() {
+        _isLoading = false;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Complete'),),);
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +91,17 @@ class LoginScreen extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
+                onChanged: (value) {
+                  email = value;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter valid email';
+                  } else {
+                    return null;
+                  }
+
+                },
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
@@ -62,6 +118,17 @@ class LoginScreen extends StatelessWidget {
                 height: 15,
               ),
               TextFormField(
+                onChanged: (value) {
+                  password = value;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter valid password';
+                  } else {
+                    return null;
+                  }
+
+                },
                 obscureText: true,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -101,8 +168,9 @@ class LoginScreen extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: const Center(
-                    child: Text('Login',
+                  child: Center(
+                    child: _isLoading ? CircularProgressIndicator( color: Colors.white,) :
+                    Text('Login',
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.white,
