@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         //brightness: Brightness.dark,
       //),
       title: 'Material App',
-      home: MainScreen(),
+      home: LoginScreen(),
     );
   }
 }
