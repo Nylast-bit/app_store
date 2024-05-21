@@ -1,3 +1,4 @@
+import 'package:appmovil/Buyers/view/screens/navigation_screens/widgets/banner_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/search_widget.dart';
@@ -12,6 +13,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             SearchWidget(),
+            BannerWidget(),
           ],
         ),
       ),

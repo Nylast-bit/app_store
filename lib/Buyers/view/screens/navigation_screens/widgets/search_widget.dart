@@ -21,7 +21,25 @@ class SearchWidget extends StatelessWidget {
               child: SizedBox(
                 width: 250,
                   height: 50,
-                  child: TextField()
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter text',
+                      hintStyle: TextStyle(
+                        color: Color(0xff7f7f7f),
+                        fontSize: 16,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10),
+
+                      ),
+                      fillColor: Colors.grey.shade200,
+                      filled: true,
+                      focusColor: Colors.black,
+                      prefixIcon: Image.asset('assets/icons/search.png'),
+                      suffixIcon: Image.asset('assets/icons/cam.png'),
+                    ),
+                  )
               ),
           ),
         ],
