@@ -10,7 +10,7 @@ class ProductWidget extends StatefulWidget {
   State<ProductWidget> createState() => _ProductWidgetState();
 }
 
-final Stream<QuerySnapshot> _productStream = FirebaseFirestore.instance.collection('products').snapshots();
+final Stream<QuerySnapshot> _productStream = FirebaseFirestore.instance.collection('productImages').snapshots();
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         }
 
         return SizedBox(
-          height: 250,
+          height: 200,
           child: ListView.builder(
             itemCount: snapshot.data!.docs.length,
               shrinkWrap: true,
