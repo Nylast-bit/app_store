@@ -23,20 +23,32 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
   Widget build(BuildContext context) {
     final _cartProvider = ref.read(cartProvider.notifier);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.favorite_border, color: Colors.black),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(children: [
-            SizedBox(
-              height: 40,
-            ),
             Text(
               widget.productData['productName'],
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 40,
+                fontSize: 24,
               ),
             ),
+            SizedBox(height: 10),
             StreamBuilder<QuerySnapshot>(
               stream: _bannersStream,
               builder: (BuildContext context,
@@ -50,14 +62,13 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 }
 
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 150,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.width * 0.8,
                     child: PageView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        // Suponiendo que 'images' es una lista de URLs
                         List<dynamic> images =
                             snapshot.data!.docs[index]['images'];
 
@@ -91,47 +102,40 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 );
               },
             ),
-            SizedBox(
-              height: 20,
+            Text(
+              '\$${widget.productData['productoPrice'].toString()}',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Row(
-              children: [
-                SizedBox(width: 20),
-                Text(
-                  'USD ' + widget.productData['productoPrice'].toString(),
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                SizedBox(width: 20),
-                Wrap(
-                  spacing: 8.0,
-                  children: List<Widget>.generate(
-                    widget.productData['productSize'].length,
-                    (int index) {
-                      return ChoiceChip(
-                        label: Text(widget.productData['productSize'][index]),
-                        selected: selectedSize ==
-                            widget.productData['productSize'][index],
-                        onSelected: (bool selected) {
-                          setState(() {
-                            selectedSize = selected
-                                ? widget.productData['productSize'][index]
-                                : null;
-                          });
-                        },
-                      );
+            SizedBox(height: 20),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10.0,
+              children: List<Widget>.generate(
+                widget.productData['productSize'].length,
+                (int index) {
+                  return ChoiceChip(
+                    label: Text(widget.productData['productSize'][index]),
+                    selected: selectedSize ==
+                        widget.productData['productSize'][index],
+                    onSelected: (bool selected) {
+                      setState(() {
+                        selectedSize = selected
+                            ? widget.productData['productSize'][index]
+                            : null;
+                      });
                     },
-                  ).toList(),
-                ),
-              ],
+                  );
+                },
+              ).toList(),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 20,
-                ),
                 Text(
                   'Category: ',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -143,9 +147,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                   ),
                 ),
                 SizedBox(width: 20),
-                SizedBox(
-                  width: 20,
-                ),
                 Text(
                   'Stock: ',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -156,20 +157,19 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(width: 20),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Center(
-              child: Row(
-                children: [
-                  Text(
-                    widget.productData['productDescription'].toString(),
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  widget.productData['productDescription'].toString(),
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
-                ],
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             SizedBox(
@@ -178,24 +178,27 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                 onPressed: () {
                   _cartProvider.addProductToCart(
                       productName: widget.productData['productName'],
-                      productPrice: double.parse(widget.productData['productoPrice'].toString()),
+                      productPrice: double.parse(
+                          widget.productData['productoPrice'].toString()),
                       productCategory: widget.productData['productCategory'],
                       imageUrl: widget.productData['images'],
                       quantity: 1,
-                      inStock: int.parse(widget.productData['productQuantity'].toString()),
+                      inStock: int.parse(
+                          widget.productData['productQuantity'].toString()),
                       productId: widget.productData['productId'],
                       productSize: "",
-                      productDiscount: double.parse(widget.productData['productDiscount'].toString()),
-                      productDescription: widget.productData['productDescription']);
+                      productDiscount: double.parse(
+                          widget.productData['productDiscount'].toString()),
+                      productDescription:
+                          widget.productData['productDescription']);
 
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.productData['productName'] + " Added to Cart"),
-                  margin: EdgeInsets.all(15),
-                        backgroundColor: Colors.grey,
-                        behavior: SnackBarBehavior.floating,
-                      )
-                  );
-
-
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        widget.productData['productName'] + " Added to Cart"),
+                    margin: EdgeInsets.all(15),
+                    backgroundColor: Colors.grey,
+                    behavior: SnackBarBehavior.floating,
+                  ));
                 },
                 style: ButtonStyle(),
                 child: Text('Add to Cart'),

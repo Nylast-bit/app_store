@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'product_item_widget.dart';
 
 class ProductWidget extends StatefulWidget {
@@ -10,7 +9,9 @@ class ProductWidget extends StatefulWidget {
   State<ProductWidget> createState() => _ProductWidgetState();
 }
 
-final Stream<QuerySnapshot> _productStream = FirebaseFirestore.instance.collection('productImages').snapshots();
+final Stream<QuerySnapshot> _productStream =
+    FirebaseFirestore.instance.collection('productImages').snapshots();
+
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
@@ -22,19 +23,22 @@ class _ProductWidgetState extends State<ProductWidget> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Center(child: CircularProgressIndicator());
         }
 
         return SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: snapshot.data!.docs.length,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final productData = snapshot.data!.docs[index];
-                return ProductItemWidget(productData: productData);
-              },
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final productData =
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ProductItemWidget(productData: productData),
+              );
+            },
           ),
         );
       },
