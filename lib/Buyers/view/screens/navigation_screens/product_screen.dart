@@ -1,17 +1,19 @@
+import 'package:appmovil/providers/card_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProductScreen extends StatefulWidget {
+class ProductScreen extends ConsumerStatefulWidget {
   ProductScreen({super.key, this.productData});
 
   final productData;
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _ProductScreenState extends ConsumerState<ProductScreen> {
   final Stream<QuerySnapshot> _bannersStream =
       FirebaseFirestore.instance.collection('productImages').snapshots();
 
@@ -19,6 +21,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _cartProvider = ref.read(cartProvider.notifier);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -131,10 +134,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
                 Text(
                   'Category: ',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   widget.productData['productCategory'].toString(),
@@ -143,16 +143,12 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                 ),
                 SizedBox(width: 20),
-
                 SizedBox(
                   width: 20,
                 ),
                 Text(
                   'Stock: ',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   widget.productData['productQuantity'].toString(),
@@ -172,27 +168,39 @@ class _ProductScreenState extends State<ProductScreen> {
                     style: TextStyle(
                       fontSize: 16,
                     ),
-
                   ),
                 ],
               ),
             ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  _cartProvider.addProductToCart(
+                      productName: widget.productData['productName'],
+                      productPrice: double.parse(widget.productData['productoPrice'].toString()),
+                      productCategory: widget.productData['productCategory'],
+                      imageUrl: widget.productData['images'],
+                      quantity: 1,
+                      inStock: int.parse(widget.productData['productQuantity'].toString()),
+                      productId: widget.productData['productId'],
+                      productSize: "",
+                      productDiscount: double.parse(widget.productData['productDiscount'].toString()),
+                      productDescription: widget.productData['productDescription']);
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.productData['productName'] + " Added to Cart"),
+                  margin: EdgeInsets.all(15),
+                        backgroundColor: Colors.grey,
+                        behavior: SnackBarBehavior.floating,
+                      )
+                  );
 
-                  onPressed: () {
 
-                  },
-                  style: ButtonStyle(
-
-                  ),
-                  child: Text('Add to Cart'),
-
-                ),
+                },
+                style: ButtonStyle(),
+                child: Text('Add to Cart'),
               ),
-
+            ),
           ]),
         ),
       ),
