@@ -1,6 +1,5 @@
-import 'package:appmovil/Buyers/view/screens/navigation_screens/widgets/banner_widget.dart';
 import 'package:flutter/material.dart';
-
+import 'widgets/banner_widget.dart';
 import 'widgets/product_text_widget.dart';
 import 'widgets/categories_widget.dart';
 import 'widgets/product_widget.dart';
@@ -12,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SearchWidget(),

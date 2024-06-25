@@ -18,13 +18,17 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductScreen(productData: widget.productData,)),
+          MaterialPageRoute(
+              builder: (context) => ProductScreen(
+                    productData: widget.productData,
+                  )),
         );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          Text(widget.productData['productName'],
+          Text(
+            widget.productData['productName'],
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -37,9 +41,9 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
           SizedBox(
             height: 5,
           ),
-          Text('USD ' + widget.productData['productoPrice'].toString(),
+          Text(
+            'USD ' + widget.productData['productoPrice'].toString(),
             style: TextStyle(
-
               fontSize: 13,
             ),
           ),

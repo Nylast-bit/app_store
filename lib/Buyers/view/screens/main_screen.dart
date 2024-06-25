@@ -1,3 +1,4 @@
+import 'package:appmovil/Buyers/view/screens/navigation_screens/product_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'navigation_screens/account_screen.dart';
