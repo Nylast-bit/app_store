@@ -1,4 +1,4 @@
-import 'dart:js_interop_unsafe';
+// import 'dart:js_interop_unsafe';
 
 import 'package:appmovil/providers/card_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,32 +19,36 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     final _cartData = ref.watch(cartProvider);
     final _cartReader = ref.read(cartProvider.notifier);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.20),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 118,
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            image: DecorationImage(
+        appBar: PreferredSize(
+          preferredSize:
+              Size.fromHeight(MediaQuery.of(context).size.height * 0.20),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 118,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              image: DecorationImage(
                 image: AssetImage('assets/icons/cartb.png'),
-                    fit: BoxFit.cover,
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                    left: 322,
+                    top: 52,
+                    child: Image.asset(
+                      'assets/icons/not.png',
+                      width: 26,
+                      height: 25,
+                    )),
+              ],
             ),
           ),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 322,
-                  top: 52,
-                  child: Image.asset('assets/icons/not.png', width: 26, height: 25,)
-              ),
-            ],
-          ),
-      ),
-      ),
-      body: SingleChildScrollView(
-        child: ListView.builder(
-          itemCount: _cartData.length,
+        ),
+        body: SingleChildScrollView(
+          child: ListView.builder(
+            itemCount: _cartData.length,
             shrinkWrap: true,
             physics: ScrollPhysics(),
             itemBuilder: (context, index) {
@@ -59,18 +63,20 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         SizedBox(
                           height: 100,
                           width: 100,
-                          child: Image.network(cartItem.imageUrl[0],
+                          child: Image.network(
+                            cartItem.imageUrl[0],
                             fit: BoxFit.cover,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                  cartItem.productName,
+                                cartItem.productName,
                                 style: GoogleFonts.lato(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -101,44 +107,52 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                       color: Color(0xff102de1),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        IconButton(onPressed: () {
-                                          _cartReader.decrementItem(cartItem.productId);
-                                        }, icon: Icon(CupertinoIcons.minus), color: Colors.white
-                                        ),
-                                        Text(cartItem.quantity.toString(),
+                                        IconButton(
+                                            onPressed: () {
+                                              _cartReader.decrementItem(
+                                                  cartItem.productId);
+                                            },
+                                            icon: Icon(CupertinoIcons.minus),
+                                            color: Colors.white),
+                                        Text(
+                                          cartItem.quantity.toString(),
                                           style: GoogleFonts.roboto(
                                             color: Colors.white,
-
                                           ),
                                         ),
-                                        IconButton(onPressed: () {
-                                          _cartReader.incrementItem(cartItem.productId);
-
-                                        }, icon: Icon(CupertinoIcons.plus), color: Colors.white
-                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              _cartReader.incrementItem(
+                                                  cartItem.productId);
+                                            },
+                                            icon: Icon(CupertinoIcons.plus),
+                                            color: Colors.white),
                                       ],
                                     ),
                                   ),
-                                  IconButton(onPressed: () {
-                                    _cartReader.removeItem(cartItem.productId);
-                                  }, icon: Icon(Icons.delete_sharp), color: Colors.red,)
+                                  IconButton(
+                                    onPressed: () {
+                                      _cartReader
+                                          .removeItem(cartItem.productId);
+                                    },
+                                    icon: Icon(Icons.delete_sharp),
+                                    color: Colors.red,
+                                  )
                                 ],
                               ),
-
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-
                 ),
               );
             },
-        ),
-      )
-    );
+          ),
+        ));
   }
 }
