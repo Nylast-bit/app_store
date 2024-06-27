@@ -3,16 +3,8 @@ import 'package:badges/badges.dart' as badges;
 import 'package:appmovil/providers/favorite_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:js_interop_unsafe';
 
-import 'package:appmovil/providers/card_provider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:badges/badges.dart' as badges;
 
-import '../inner_screens/check_out_screen.dart';
 
 
 
@@ -42,7 +34,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/icons/favoriteb.png'),
+                image: AssetImage('assets/icons/cartb.png'),
                 fit: BoxFit.cover,
               )
           ),
@@ -190,25 +182,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      Container(
-                                        height: 40,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff102de1),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
 
-                                            Text(favoriteItem.quantity.toString(),
-                                              style: GoogleFonts.roboto(
-                                                color: Colors.white,
-
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                       IconButton(onPressed: () {
                                         _favoriteReader.removeItem(favoriteItem.productId);
                                       }, icon: Icon(Icons.delete_sharp), color: Colors.red,)

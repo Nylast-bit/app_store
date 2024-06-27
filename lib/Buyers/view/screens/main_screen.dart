@@ -22,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     FavoriteScreen(),
     StoreScreen(),
     CartScreen(),
+
     AccountScreen(),
   ];
 

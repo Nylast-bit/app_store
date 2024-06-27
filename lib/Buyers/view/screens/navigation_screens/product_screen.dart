@@ -1,4 +1,5 @@
 import 'package:appmovil/providers/card_provider.dart';
+import 'package:appmovil/providers/favorite_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     final _cartProvider = ref.read(cartProvider.notifier);
+    final _favoriteProvider = ref.read(favoriteProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -40,6 +42,26 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                   : Colors.black, // Toggle color based on _isLiked
             ),
             onPressed: () {
+              _favoriteProvider.addProductToFavorites(
+                  productName: widget.productData['productName'],
+                  productPrice: double.parse(
+                      widget.productData['productoPrice'].toString()),
+                  productCategory: widget.productData['productCategory'],
+                  imageUrl: widget.productData['images'],
+                  inStock: int.parse(
+                      widget.productData['productQuantity'].toString()),
+                  productId: widget.productData['productId'].toString()
+              );
+
+
+
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    widget.productData['productName'] + " Added to Cart"),
+                margin: EdgeInsets.all(15),
+                backgroundColor: Colors.grey,
+                behavior: SnackBarBehavior.floating,
+              ));
               setState(() {
                 _isLiked = !_isLiked; // Toggle liked state
               });
